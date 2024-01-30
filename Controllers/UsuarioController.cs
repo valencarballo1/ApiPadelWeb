@@ -12,6 +12,7 @@ namespace ApiWeb.Controllers
     public class UsuarioController : ControllerBase
     {
         private UsuarioRepository _UsuarioRepository;
+        private readonly IConfiguration _configuration;
 
         public UsuarioController()
         {
@@ -27,11 +28,17 @@ namespace ApiWeb.Controllers
         }
 
         [HttpPost("Registro")]
-        public bool Registro(string nombreUsuario, string contrasena, string nombre, string apellido, string celular)
+        public bool Registro(UsuarioRegistroDTO usuarioRegistro)
         {
-            bool seRegistro = _UsuarioRepository.Registro(nombreUsuario, contrasena, nombre, apellido, celular);
+            bool seRegistro = _UsuarioRepository.Registro(usuarioRegistro);
 
             return seRegistro;
+        }
+
+        [HttpGet("Login")]
+        public string Login(string usuarioNombre, string contrasena)
+        {
+            return _UsuarioRepository.LogIn(usuarioNombre, contrasena); 
         }
     }
 }
